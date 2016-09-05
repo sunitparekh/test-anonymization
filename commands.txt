@@ -1,0 +1,25 @@
+start server
+-----------------
+postgres -D /usr/local/var/postgres
+
+
+login to psql shell
+----------------------
+psql postgres `whoami`
+
+
+create database and grant access to user
+---------------------
+create database dell;
+create database dell_empty;
+
+CREATE USER developer WITH PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE "dell" to developer;
+RANT ALL PRIVILEGES ON DATABASE "dell_empty" to developer;
+
+
+
+login to dell database
+--------------------------
+psql -U developer -d dell
+psql -U developer -d dell_empty
