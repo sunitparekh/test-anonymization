@@ -1,21 +1,25 @@
 start server
 -----------------
 postgres -D /usr/local/var/postgres
+pg_ctl -D /usr/local/var/postgres start
 
 
 login to psql shell
 ----------------------
 psql postgres `whoami`
 
-
 create database and grant access to user
 ---------------------
-create database dell;
-create database dell_empty;
-
 CREATE USER developer WITH PASSWORD 'password';
+
+drop database dell;
+create database dell;
 GRANT ALL PRIVILEGES ON DATABASE "dell" to developer;
-RANT ALL PRIVILEGES ON DATABASE "dell_empty" to developer;
+
+
+drop database dell_empty;
+create database dell_empty;
+GRANT ALL PRIVILEGES ON DATABASE "dell_empty" to developer;
 
 
 
@@ -23,3 +27,19 @@ login to dell database
 --------------------------
 psql -U developer -d dell
 psql -U developer -d dell_empty
+
+
+import data
+-------------------------
+psql -d dell -U developer -a -f dellstore2-normal-1.0.sql
+
+psql -d dell_empty -U developer -a -f dellstore_schema_only.sql
+
+
+postgres commands
+----------------------
+\q                  --- quit
+\?                  --- help
+\c dell             --- connect to dell database
+\c dell_empty       --- connect to dell_empty database
+\dt                 --- show all tables
